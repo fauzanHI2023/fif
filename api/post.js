@@ -41,10 +41,10 @@ app.post("/api/post", async (req, res) => {
   }
 });
 
-// ✅ Tambahan untuk mode lokal:
-if (process.env.NODE_ENV !== "production") {
-  const PORT = 3000;
-  app.listen(PORT, () => console.log(`🚀 Server berjalan di http://localhost:${PORT}`));
-}
+// // ✅ Tambahan untuk mode lokal:
+// if (process.env.NODE_ENV !== "production") {
+//   const PORT = 3000;
+//   app.listen(PORT, () => console.log(`🚀 Server berjalan di http://localhost:${PORT}`));
+// }
 
 export default app;
