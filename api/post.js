@@ -16,13 +16,9 @@ async function connectToDB() {
   return client.db("fif").collection("cii");
 }
 
-app.post("/", async (req, res) => {
+app.post("/api/post", async (req, res) => {
   try {
     const { company_name, contact_person_name, email_address, phone_number, meeting_type, messages } = req.body;
-
-    if (!company_name || !email_address || !messages) {
-      return res.status(400).json({ error: "Data wajib belum lengkap" });
-    }
 
     const collection = await connectToDB();
     const result = await collection.insertOne({
@@ -35,14 +31,20 @@ app.post("/", async (req, res) => {
       created_at: new Date(),
     });
 
-    return res.status(201).json({
-      message: "Data berhasil disimpan ke MongoDB Atlas",
+    res.status(201).json({
+      message: "Data berhasil disimpan",
       insertedId: result.insertedId,
     });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error:", err);
     res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 });
+
+// ✅ Tambahan untuk mode lokal:
+if (process.env.NODE_ENV !== "production") {
+  const PORT = 3000;
+  app.listen(PORT, () => console.log(`🚀 Server berjalan di http://localhost:${PORT}`));
+}
 
 export default app;
