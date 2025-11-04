@@ -1,11 +1,20 @@
 import express from "express";
 import { MongoClient } from "mongodb";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
 // Ganti dengan connection string MongoDB Atlas kamu
 const uri = "mongodb+srv://hialdialfianto_db_user:k1fVGf9V9pjC2RjV@cluster0.wyyp9a1.mongodb.net/?appName=Cluster0";
+
+app.use(
+  cors({
+    origin: ["https://human-initiative.org", "http://127.0.0.1:5500"],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 let client;
 async function connectToDB() {
